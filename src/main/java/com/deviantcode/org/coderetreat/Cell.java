@@ -5,7 +5,7 @@ public class Cell {
     private int neighborCount;
 
     public boolean isAlive() {
-        return alive;
+        return alive || neighborCount == 2 || neighborCount == 3;
     }
 
     public void setNeighbors(int neighborCount) {
