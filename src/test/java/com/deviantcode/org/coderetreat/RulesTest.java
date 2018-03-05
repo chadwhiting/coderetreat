@@ -26,19 +26,30 @@ public class RulesTest {
         }
     }
 
+    @Test
+    public void anyDeadCellWithExactlyThreeLiveNeighborsBecomesALiveCell() {
+        final int neighborCount = 3;
+        runTestsOnDeadCellThatComesToLife(neighborCount);
+    }
+
+    private void runTestsOnDeadCellThatComesToLife(int neighborCount) {
+        Cell cell = initializeCell(neighborCount, false);
+        assertTrue(cell.isAlive(), "Expected a cell to end up dead due to underpopulation");
+    }
+
     private void runTestsOnLivingCellThatLives(int neighborCount) {
-        Cell cell = initializeCell(neighborCount);
+        Cell cell = initializeCell(neighborCount, true);
         assertTrue(cell.isAlive(), "Expected a cell to end up dead due to underpopulation");
     }
 
     private void runTestsOnLivingCellThatDies(int neighborCount) {
-        Cell cell = initializeCell(neighborCount);
+        Cell cell = initializeCell(neighborCount, true);
         assertFalse(cell.isAlive(), "Expected a cell to end up dead due to underpopulation");
     }
 
-    private Cell initializeCell(int neighborCount) {
-        Cell cell = new Cell();
-        assertTrue(cell.isAlive(), "Expected a cell to start out alive");
+    private Cell initializeCell(int neighborCount, boolean isAlive) {
+        Cell cell = new Cell(isAlive);
+        assertEquals(cell.isAlive(), isAlive, "Expected a cell to be alive? " + isAlive);
         cell.setNeighbors(neighborCount);
         assertEquals(cell.getNeighborCount(), neighborCount, "Expected " + neighborCount + " living neighbor(s)");
         cell.tick();

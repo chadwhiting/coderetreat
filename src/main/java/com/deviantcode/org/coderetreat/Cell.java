@@ -4,6 +4,10 @@ public class Cell {
     private boolean alive = true;
     private int neighborCount;
 
+    public Cell(boolean alive) {
+        this.alive = alive;
+    }
+
     public boolean isAlive() {
         return alive || neighborCount == 2 || neighborCount == 3;
     }
