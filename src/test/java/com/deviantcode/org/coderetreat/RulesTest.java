@@ -32,19 +32,32 @@ public class RulesTest {
         runTestsOnDeadCellThatComesToLife(neighborCount);
     }
 
+    @Test
+    public void anyDeadCellWithFewerThanOrGreaterThanThreeLiveNeighborsStaysDead() {
+        final int[] neighborCounts = { 0, 1, 2, 4, 5, 6, 7, 8 };
+        for (int neighborCount : neighborCounts) {
+            runTestsOnDeadCellThatStaysDead(neighborCount);
+        }
+    }
+
+    private void runTestsOnDeadCellThatStaysDead(int neighborCount) {
+        Cell cell = initializeCell(neighborCount, false);
+        assertFalse(cell.isAlive(), "Expected a dead cell with " + neighborCount + " neighbors to stay dead");
+    }
+
     private void runTestsOnDeadCellThatComesToLife(int neighborCount) {
         Cell cell = initializeCell(neighborCount, false);
-        assertTrue(cell.isAlive(), "Expected a cell to end up dead due to underpopulation");
+        assertTrue(cell.isAlive(), "Expected a dead cell with " + neighborCount + " neighbors to come to life");
     }
 
     private void runTestsOnLivingCellThatLives(int neighborCount) {
         Cell cell = initializeCell(neighborCount, true);
-        assertTrue(cell.isAlive(), "Expected a cell to end up dead due to underpopulation");
+        assertTrue(cell.isAlive(), "Expected a living cell with " + neighborCount + " neighbors to stay alive");
     }
 
     private void runTestsOnLivingCellThatDies(int neighborCount) {
         Cell cell = initializeCell(neighborCount, true);
-        assertFalse(cell.isAlive(), "Expected a cell to end up dead due to underpopulation");
+        assertFalse(cell.isAlive(), "Expected a living cell with " + neighborCount + " neighbors to end up dead due to underpopulation");
     }
 
     private Cell initializeCell(int neighborCount, boolean isAlive) {

@@ -1,26 +1,26 @@
 package com.deviantcode.org.coderetreat;
 
-public class Cell {
-    private boolean alive = true;
+class Cell {
+    private boolean alive;
     private int neighborCount;
 
-    public Cell(boolean alive) {
+    Cell(boolean alive) {
         this.alive = alive;
     }
 
-    public boolean isAlive() {
-        return alive || neighborCount == 2 || neighborCount == 3;
+    boolean isAlive() {
+        return alive;
     }
 
-    public void setNeighbors(int neighborCount) {
+    void setNeighbors(int neighborCount) {
         this.neighborCount = neighborCount;
     }
 
-    public int getNeighborCount() {
+    int getNeighborCount() {
         return neighborCount;
     }
 
-    public void tick() {
-        alive = !alive;
+    void tick() {
+        alive = (alive && neighborCount == 2) || neighborCount == 3;
     }
 }
